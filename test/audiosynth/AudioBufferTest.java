@@ -29,4 +29,20 @@ class AudioBufferTest {
             new float[] { -0.15f, 0, 0.5f, 0, 0, -1, 0, 0.1f },
             audio.getSamples());
     }
+    @Test
+    void mixStartsSignalAtTime0() {
+    audio.mix(n -> n + 10, 4, 3);
+    assertArrayEquals(
+        new float[] { 0, 0, 0, 0, 10, 11, 12, 0 },
+        audio.getSamples());
+}
+
+    @Test
+    void mixAddsToExistingSignal() {
+    audio.getSamples()[4] = 100;
+    audio.mix(n -> 1, 2, 4);
+    assertArrayEquals(
+        new float[] { 0, 0, 1, 1, 101, 1, 0, 0 },
+        audio.getSamples());
+}
 }

@@ -181,4 +181,19 @@ public class AudioBuffer {
          */
         void playbackUpdated(double currentTime, boolean isComplete);
     }
+    /**
+ * Renders a slice of the given signal into this audio buffer, adding the new signal to the
+ * sample values already present in the buffer.
+ *
+ * @param signal    A sound source.
+ * @param offset    The number of samples into the audio buffer to start adding the new signal.
+ *                  This offset is time 0 for the signal.
+ * @param duration  The number of samples of the signal to add to the buffer. The offset +
+ *                  duration must not exceed the length of the buffer.
+ */
+    public void mix(Signal signal, int offset, int duration){
+        for (int i = 0; i < duration && i + offset < samples.length; i ++) {
+            samples[i + offset] += signal.amplitudeAt(i);
+        }
+    }
 }

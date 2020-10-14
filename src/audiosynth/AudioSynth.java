@@ -1,14 +1,18 @@
 package audiosynth;
 
 import audiosynth.waveform.SineWave;
+import audiosynth.waveform.SquareWave;
+import audiosynth.waveform.TriangularWave;
 
 /**
  * Generates and visualizes music.
  */
 public class AudioSynth {
     public static void main(String[] args) {
-        AudioBuffer audio = new AudioBuffer(20000);
-        audio.fill(new SineWave().createSignal(127));
-        audio.play();
+        String fileName = "kondo.csv";
+        new SongReader()
+            .readSong(fileName)
+            .renderAudio()
+            .play();
     }
 }
