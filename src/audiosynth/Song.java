@@ -45,27 +45,4 @@ public class Song {
             audio.normalize();
             return audio;  
     }
-    // Sketch of the method:
-    //
-    // Create a new AudioBuffer. Compute the size of the buffer using:
-    //
-    //     Utils.covertSecondsToSamples(getDuration())
-    //
-    // For each note:
-    //
-    //     Create a signal for the note by converting its pitch a wavelength.
-    //
-    //     Call mix() on your audio buffer to mix the signal into the buffer
-    //     at the correct time and for the correct duration.
-    //  
-    //     Methods that will help you:
-    //  
-    //     - Utils.convertPitchToWavelength()
-    //     - Utils.covertSecondsToSamples()
-    //     - note.get_______()
-    //
-    // Call normalize() on your audio buffer. This prevents the mixed audio
-    // from being too loud and clipping.
-    //
-    // Return the audio buffer. 
 }
