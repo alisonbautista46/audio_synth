@@ -23,7 +23,7 @@ public class SongVisualization extends GraphicsGroup {
     private GraphicsGroup noteVisualizer;
     private double pixelsPerSecond;
     private double pixelsPerSemitone;
-    // other instance variables?
+    List<Note> notes;
 
     /**
      * Creates an empty song visualization.
@@ -47,8 +47,8 @@ public class SongVisualization extends GraphicsGroup {
     public void showSong(Song song) {
         
         visualizer.removeAll();
-        List<Note> notes = song.getNotes();
-        for (Note note:notes) {
+        this.notes = song.getNotes();
+        for (Note note:this.notes) {
             Rectangle pixel = new Rectangle(note.getStartTime() * pixelsPerSecond, (MAX_PITCH - note.getPitch())* pixelsPerSemitone, note.getDuration() * pixelsPerSecond, pixelsPerSemitone);
             pixel.setStrokeWidth(0.5); 
             pixel.setFilled(true);
@@ -63,8 +63,7 @@ public class SongVisualization extends GraphicsGroup {
      * @param done    True if the song is done playing
      */
     public void setTime(double seconds, boolean done) {
-        noteVisualizer.setPosition(noteVisualizer.getX()- seconds, noteVisualizer.getY());
-        System.out.println(noteVisualizer.getX());
+        noteVisualizer.setPosition(pixelsPerSecond*-seconds, noteVisualizer.getY()); 
     }
 
     /**

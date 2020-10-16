@@ -11,7 +11,7 @@ import java.awt.Color;
  */
 public class AudioSynth {
     public static void main(String[] args) {
-            String fileName = "bach.csv";  // Also try "bach.csv"
+            String fileName = "kondo.csv";  
             Song song = new SongReader().readSong(fileName);
 
             SongVisualization visualization = new SongVisualization(80, 6);
