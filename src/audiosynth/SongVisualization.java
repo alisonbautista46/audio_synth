@@ -19,7 +19,7 @@ public class SongVisualization extends GraphicsGroup {
     public static final int MAX_PITCH = 120;
 
     private final Map<Waveform,Color> waveformColors = new HashMap<>();
-    private final GraphicsGroup visualizer;
+    private GraphicsGroup visualizer;
     private double pixelsPerSecond;
     private double pixelsPerSemitone;
     // other instance variables?
@@ -31,17 +31,22 @@ public class SongVisualization extends GraphicsGroup {
      * @param pixelsPerSemitone Number of pixels per pitch unit
      */
     public SongVisualization(double pixelsPerSecond, double pixelsPerSemitone) {
-        visualizer = new GraphicsGroup(pixelsPerSecond, pixelsPerSemitone);
+        this.pixelsPerSecond = pixelsPerSecond;
+        this.pixelsPerSemitone = pixelsPerSemitone;
+        visualizer = new GraphicsGroup();
+        add(visualizer);
     }
 
     /**
      * Shows the notes of the given song, removing any song already present.
      */
     public void showSong(Song song) {
+        
         visualizer.removeAll();
         List<Note> notes = song.getNotes();
         for (Note note:notes) {
-            Rectangle pixel = new Rectangle(note.getDuration(), MAX_PITCH - note.getPitch(), pixelsPerSecond, pixelsPerSemitone);
+            Rectangle pixel = new Rectangle(note.getStartTime(), MAX_PITCH - note.getPitch(), pixelsPerSecond, pixelsPerSemitone);
+            pixel.setStrokeWidth(0.5); 
             pixel.setFilled(true);
             pixel.setFillColor(getNoteColor(note));
             visualizer.add(pixel);
