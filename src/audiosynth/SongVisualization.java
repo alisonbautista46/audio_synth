@@ -20,6 +20,7 @@ public class SongVisualization extends GraphicsGroup {
 
     private final Map<Waveform,Color> waveformColors = new HashMap<>();
     private GraphicsGroup visualizer;
+    private GraphicsGroup noteVisualizer;
     private double pixelsPerSecond;
     private double pixelsPerSemitone;
     // other instance variables?
@@ -34,7 +35,10 @@ public class SongVisualization extends GraphicsGroup {
         this.pixelsPerSecond = pixelsPerSecond;
         this.pixelsPerSemitone = pixelsPerSemitone;
         visualizer = new GraphicsGroup();
+        noteVisualizer = new GraphicsGroup();
         add(visualizer);
+        add(noteVisualizer);
+        visualizer.add(noteVisualizer);
     }
 
     /**
@@ -45,25 +49,23 @@ public class SongVisualization extends GraphicsGroup {
         visualizer.removeAll();
         List<Note> notes = song.getNotes();
         for (Note note:notes) {
-            Rectangle pixel = new Rectangle(note.getStartTime(), MAX_PITCH - note.getPitch(), pixelsPerSecond, pixelsPerSemitone);
+            Rectangle pixel = new Rectangle(note.getStartTime() * pixelsPerSecond, (MAX_PITCH - note.getPitch())* pixelsPerSemitone, note.getDuration() * pixelsPerSecond, pixelsPerSemitone);
             pixel.setStrokeWidth(0.5); 
             pixel.setFilled(true);
             pixel.setFillColor(getNoteColor(note));
-            visualizer.add(pixel);
+            noteVisualizer.add(pixel);
         }
     }
-    // Remove all existing graphics
-    //
-    // For each note:
-    //
-    //    Create a rectangle using the pixelsPerSecond, pixelsPerSemitone,
-    //    and the note's data to compute the coordinates.
-    //
-    //    Tip: Use (MAX_PITCH - note.getPitch()) to make higher notes
-    //    be higher on the screen instead of lower.
-    //
-    //    Set the rectangle’s fill color, then add it to your graphics group.
-
+    /**
+     * Moves the visualization to show that the given time is the current time.
+     *
+     * @param seconds Time from the beginning of the song
+     * @param done    True if the song is done playing
+     */
+    public void setTime(double seconds, boolean done) {
+        noteVisualizer.setPosition(noteVisualizer.getX()- seconds, noteVisualizer.getY());
+        System.out.println(noteVisualizer.getX());
+    }
 
     /**
      * A helper method you can use to generate different colors for different
@@ -78,4 +80,5 @@ public class SongVisualization extends GraphicsGroup {
         }
         return color;
     }
+
 }
